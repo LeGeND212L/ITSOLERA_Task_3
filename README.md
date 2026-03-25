@@ -185,6 +185,51 @@ Then reference them in this README:
 - Backend: Render / Railway / VPS
 - Database: MongoDB Atlas
 
+## Vercel Deployment (Separate Frontend + Backend)
+
+This project is configured to deploy frontend and backend as two separate Vercel projects.
+
+### Backend on Vercel
+
+1. Create a new Vercel project and set Root Directory to `Backend`.
+2. Vercel will use `Backend/vercel.json` and deploy `api/index.js` as serverless API.
+3. Add backend environment variables in Vercel Project Settings -> Environment Variables:
+
+```env
+NODE_ENV=production
+MONGODB_URI=your_mongodb_connection_string
+MONGODB_URI_FALLBACK=
+JWT_SECRET=your_strong_jwt_secret
+CORS_ORIGINS=https://your-frontend.vercel.app
+FRONTEND_URL=https://your-frontend.vercel.app
+ALLOW_SERVER_WITHOUT_DB=false
+AUTO_SEED_ON_STARTUP=false
+ENSURE_ADMIN_ON_STARTUP=false
+DEFAULT_ADMIN_USERNAME=Admin
+DEFAULT_ADMIN_PASSWORD=Admin123@
+```
+
+Important: keep `AUTO_SEED_ON_STARTUP=false` on Vercel to avoid unnecessary writes on cold starts.
+
+### Frontend on Vercel
+
+1. Create another Vercel project and set Root Directory to `Frontend`.
+2. Vercel will use `Frontend/vercel.json` for SPA routing.
+3. Add frontend environment variable:
+
+```env
+VITE_API_BASE_URL=https://your-backend.vercel.app/api
+```
+
+4. Redeploy frontend after setting `VITE_API_BASE_URL`.
+
+### Local Environment Templates
+
+- Backend template: `Backend/.env.example`
+- Frontend template: `Frontend/.env.example`
+
+Copy these into `.env` files locally and fill real values.
+
 ## Contributing
 
 1. Fork the repository
