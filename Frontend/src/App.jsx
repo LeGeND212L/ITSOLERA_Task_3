@@ -62,6 +62,7 @@ const AppRoutes = () => {
         <Route path="logs" element={<SectionRoute section="logs"><Logs /></SectionRoute>} />
         <Route path="admin/users" element={<SectionRoute section="adminUsers"><AdminUsers /></SectionRoute>} />
       </Route>
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };
