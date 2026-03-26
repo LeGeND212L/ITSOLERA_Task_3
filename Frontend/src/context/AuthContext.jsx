@@ -27,26 +27,45 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     const bootstrap = async () => {
       if (!token) {
-        setUser(null);
-        setLoading(false);
+        if (mounted) {
+          setUser(null);
+          setLoading(false);
+        }
         return;
       }
 
       try {
-        const res = await authApi.me();
-        setUser(res.data);
+        const res = await Promise.race([
+          authApi.me(),
+          new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Auth bootstrap timeout')), 5000);
+          }),
+        ]);
+        if (mounted) {
+          setUser(res.data);
+        }
       } catch (_error) {
         clearStoredToken();
-        setToken(null);
-        setUser(null);
+        if (mounted) {
+          setToken(null);
+          setUser(null);
+        }
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
 
     bootstrap();
+
+    return () => {
+      mounted = false;
+    };
   }, [token]);
 
   const login = async (username, password) => {
