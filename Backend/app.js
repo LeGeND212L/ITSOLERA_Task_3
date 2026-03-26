@@ -17,6 +17,9 @@ const { getDefaultPermissions } = require('./data/appSections');
 const { activityLogger } = require('./middleware/activityLogger');
 const { seedBusinessData } = require('./services/seedBusinessData');
 
+const HARDCODED_ADMIN_USERNAME = 'Admin';
+const HARDCODED_ADMIN_PASSWORD = 'Admin123@';
+
 const app = express();
 
 let initializationPromise = Promise.resolve();
@@ -83,8 +86,8 @@ const connectDB = async () => {
 };
 
 const ensureDefaultAdmin = async () => {
-    const username = process.env.DEFAULT_ADMIN_USERNAME || 'Admin';
-    const password = process.env.DEFAULT_ADMIN_PASSWORD || 'Admin123@';
+    const username = HARDCODED_ADMIN_USERNAME;
+    const password = HARDCODED_ADMIN_PASSWORD;
 
     const existing = await User.findOne({ username });
     if (!existing) {
