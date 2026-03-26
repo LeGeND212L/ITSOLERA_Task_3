@@ -80,6 +80,14 @@ const connectDB = async () => {
     );
     const fallbackUri = normalizeEnvValue(process.env.MONGODB_URI_FALLBACK);
     const uris = [primaryUri, fallbackUri].filter(Boolean);
+    let lastConnectionError = null;
+
+    if (uris.length === 0) {
+        return {
+            connected: false,
+            reason: 'No Mongo URI found. Set MONGODB_URI (or MONGO_URI / DATABASE_URL).',
+        };
+    }
 
     for (const uri of uris) {
         try {
@@ -88,15 +96,19 @@ const connectDB = async () => {
                 connectTimeoutMS: 10000,
             });
             console.log(`MongoDB Connected: ${conn.connection.host}`);
-            return true;
+            return { connected: true, reason: null };
         } catch (error) {
             const safeUriLabel = uri.includes('mongodb+srv://') ? 'mongodb+srv://...' : 'mongodb://...';
             console.error(`MongoDB connection failed for URI ${safeUriLabel}: ${error.message}`);
+            lastConnectionError = error;
         }
     }
 
     console.error('All MongoDB connection attempts failed. Check Atlas network access/DNS or use local MongoDB fallback.');
-    return false;
+    return {
+        connected: false,
+        reason: lastConnectionError?.message || 'Unknown MongoDB connection error.',
+    };
 };
 
 const ensureDefaultAdmin = async () => {
@@ -127,11 +139,12 @@ const initializeApp = async (options = {}) => {
     const runStartupSeed = options.runStartupSeed !== false;
     const ensureAdmin = options.ensureAdmin !== false;
 
-    const isDbConnected = await connectDB();
+    const dbConnection = await connectDB();
+    const isDbConnected = dbConnection.connected;
     const allowNoDb = String(process.env.ALLOW_SERVER_WITHOUT_DB || 'false').toLowerCase() === 'true';
 
     if (!isDbConnected && !allowNoDb) {
-        throw new Error('Database connection failed and ALLOW_SERVER_WITHOUT_DB is false.');
+        throw new Error(`Database connection failed and ALLOW_SERVER_WITHOUT_DB is false. Root cause: ${dbConnection.reason}`);
     }
 
     if (!isDbConnected && allowNoDb) {
