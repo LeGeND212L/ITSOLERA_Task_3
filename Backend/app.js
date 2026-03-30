@@ -17,6 +17,27 @@ const { getDefaultPermissions } = require('./data/appSections');
 const { activityLogger } = require('./middleware/activityLogger');
 const { seedBusinessData } = require('./services/seedBusinessData');
 
+// Production environment check
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+// Helper for conditional logging - disable in production
+const log = (...args) => {
+    if (!isProduction) {
+        console.log(...args);
+    }
+};
+
+const warn = (...args) => {
+    if (!isProduction) {
+        console.warn(...args);
+    }
+};
+
+const error = (...args) => {
+    console.error(...args);
+};
+
 const HARDCODED_ADMIN_USERNAME = 'Admin';
 const HARDCODED_ADMIN_PASSWORD = 'Admin123@';
 
@@ -95,16 +116,16 @@ const connectDB = async () => {
                 serverSelectionTimeoutMS: 10000,
                 connectTimeoutMS: 10000,
             });
-            console.log(`MongoDB Connected: ${conn.connection.host}`);
+            log(`MongoDB Connected: ${conn.connection.host}`);
             return { connected: true, reason: null };
-        } catch (error) {
+        } catch (err) {
             const safeUriLabel = uri.includes('mongodb+srv://') ? 'mongodb+srv://...' : 'mongodb://...';
-            console.error(`MongoDB connection failed for URI ${safeUriLabel}: ${error.message}`);
-            lastConnectionError = error;
+            error(`MongoDB connection failed for URI ${safeUriLabel}: ${err.message}`);
+            lastConnectionError = err;
         }
     }
 
-    console.error('All MongoDB connection attempts failed. Check Atlas network access/DNS or use local MongoDB fallback.');
+    error('All MongoDB connection attempts failed. Check Atlas network access/DNS or use local MongoDB fallback.');
     return {
         connected: false,
         reason: lastConnectionError?.message || 'Unknown MongoDB connection error.',
@@ -123,7 +144,7 @@ const ensureDefaultAdmin = async () => {
             role: 'admin',
             permissions: getDefaultPermissions('admin'),
         });
-        console.log(`Default admin created: ${username}`);
+        log(`Default admin created: ${username}`);
         return created;
     }
 
@@ -131,7 +152,7 @@ const ensureDefaultAdmin = async () => {
     existing.role = 'admin';
     existing.permissions = getDefaultPermissions('admin');
     await existing.save();
-    console.log(`Default admin ensured: ${username}`);
+    log(`Default admin ensured: ${username}`);
     return existing;
 };
 
@@ -148,7 +169,7 @@ const initializeApp = async (options = {}) => {
     }
 
     if (!isDbConnected && allowNoDb) {
-        console.warn('Starting server without DB connection because ALLOW_SERVER_WITHOUT_DB=true');
+        warn('Starting server without DB connection because ALLOW_SERVER_WITHOUT_DB=true');
         return { dbConnected: false };
     }
 
@@ -159,7 +180,7 @@ const initializeApp = async (options = {}) => {
 
     if (runStartupSeed) {
         const result = await seedBusinessData({ processedBy: adminUser });
-        console.log(`Business seed ready: suppliers=${result.suppliersSeeded}, customers=${result.customersSeeded}, purchases=${result.purchasesSeeded}`);
+        log(`Business seed ready: suppliers=${result.suppliersSeeded}, customers=${result.customersSeeded}, purchases=${result.purchasesSeeded}`);
     }
 
     return { dbConnected: true };
