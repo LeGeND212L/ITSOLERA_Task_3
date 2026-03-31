@@ -5,16 +5,6 @@
   "env": {
     "VITE_APP_ENV": "production"
   },
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist",
-        "buildCommand": "npm run build"
-      }
-    }
-  ],
   "routes": [
     {
       "src": "/assets/.*",
