@@ -92,7 +92,7 @@ FRONTEND_URL=https://your-frontend.vercel.app
 CORS_ORIGINS=https://your-frontend.vercel.app
 AUTO_SEED_ON_STARTUP=false
 ENSURE_ADMIN_ON_STARTUP=true
-ALLOW_SERVER_WITHOUT_DB=false
+ALLOW_SERVER_WITHOUT_DB=false 
 ```
 
 ---

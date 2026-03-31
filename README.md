@@ -25,6 +25,7 @@ Built with separation of concerns in mind, the system separates **Backend** (RES
 ## ✨ Key Features
 
 ### 🔐 Security & Access Control
+
 - JWT-based authentication with secure password hashing (bcrypt)
 - Role-based access control (Admin/Staff)
 - Section-level permissions for granular feature access
@@ -32,6 +33,7 @@ Built with separation of concerns in mind, the system separates **Backend** (RES
 - Secure API routes with middleware protection
 
 ### 📦 Inventory Management
+
 - Medicine database with stock tracking
 - Real-time stock levels and threshold alerts
 - Supplier management with purchase history
@@ -39,6 +41,7 @@ Built with separation of concerns in mind, the system separates **Backend** (RES
 - Stock reconciliation and variance reporting
 
 ### 💳 Sales & Billing
+
 - Point-of-Sale (POS) system with invoice generation
 - Customer management with purchase history
 - Comprehensive bill editing with stock rollback
@@ -46,6 +49,7 @@ Built with separation of concerns in mind, the system separates **Backend** (RES
 - Sales reports and analytics
 
 ### 📊 Reporting & Analytics
+
 - Dashboard with key metrics and KPIs
 - Filtered reporting modules
 - Activity logs with full data-change audits
@@ -53,6 +57,7 @@ Built with separation of concerns in mind, the system separates **Backend** (RES
 - Exportable reports
 
 ### 🔍 Audit & Compliance
+
 - Immutable activity logs (no delete operations)
 - Auth event tracking and login history
 - Complete data change audit trail
@@ -62,35 +67,38 @@ Built with separation of concerns in mind, the system separates **Backend** (RES
 ## 🛠 Tech Stack
 
 ### Frontend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| **React** | 19.x | UI library and component framework |
-| **Vite** | 8.x | Next-generation build tool and dev server |
-| **React Router** | 7.x | Client-side routing and navigation |
-| **Tailwind CSS** | 3.x | Utility-first CSS framework |
-| **Axios** | 1.x | HTTP client for API requests |
-| **Lucide React** | Latest | Icon library |
-| **React-to-Print** | 3.x | Invoice/receipt printing support |
+
+| Technology         | Version | Purpose                                   |
+| ------------------ | ------- | ----------------------------------------- |
+| **React**          | 19.x    | UI library and component framework        |
+| **Vite**           | 8.x     | Next-generation build tool and dev server |
+| **React Router**   | 7.x     | Client-side routing and navigation        |
+| **Tailwind CSS**   | 3.x     | Utility-first CSS framework               |
+| **Axios**          | 1.x     | HTTP client for API requests              |
+| **Lucide React**   | Latest  | Icon library                              |
+| **React-to-Print** | 3.x     | Invoice/receipt printing support          |
 
 ### Backend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| **Node.js** | 18.x | JavaScript runtime environment |
-| **Express.js** | 5.x | Web application framework |
-| **MongoDB** | 9.x | NoSQL document database |
-| **Mongoose** | 9.x | MongoDB object modeling |
-| **Joi** | 18.x | Data validation library |
-| **JWT** | 9.x | Authentication tokens |
-| **bcrypt** | 6.x | Password hashing library |
-| **CORS** | 2.x | Cross-Origin Resource Sharing middleware |
-| **dotenv** | 17.x | Environment variable management |
+
+| Technology     | Version | Purpose                                  |
+| -------------- | ------- | ---------------------------------------- |
+| **Node.js**    | 18.x    | JavaScript runtime environment           |
+| **Express.js** | 5.x     | Web application framework                |
+| **MongoDB**    | 9.x     | NoSQL document database                  |
+| **Mongoose**   | 9.x     | MongoDB object modeling                  |
+| **Joi**        | 18.x    | Data validation library                  |
+| **JWT**        | 9.x     | Authentication tokens                    |
+| **bcrypt**     | 6.x     | Password hashing library                 |
+| **CORS**       | 2.x     | Cross-Origin Resource Sharing middleware |
+| **dotenv**     | 17.x    | Environment variable management          |
 
 ### Deployment
-| Service | Purpose |
-|---------|---------|
-| **Vercel** | Hosting (Frontend & Backend separately) |
-| **MongoDB Atlas** | Cloud database hosting |
-| **Git/GitHub** | Version control |
+
+| Service           | Purpose                                 |
+| ----------------- | --------------------------------------- |
+| **Vercel**        | Hosting (Frontend & Backend separately) |
+| **MongoDB Atlas** | Cloud database hosting                  |
+| **Git/GitHub**    | Version control                         |
 
 ## 📁 Project Structure
 
@@ -182,6 +190,7 @@ Medical-Store-Management-System/
 ### Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - **Node.js** 18.0 or higher
 - **npm** 9.0 or higher (comes with Node.js)
 - **Git** for version control
@@ -261,12 +270,14 @@ npm run dev
 The system includes seed scripts for demo data. To seed the database:
 
 #### Seed Medicines:
+
 ```bash
 cd Backend
 npm run seed:medicines
 ```
 
 #### Seed Business Data (Suppliers, Customers, Purchases):
+
 ```bash
 npm run seed:business
 ```
@@ -275,43 +286,44 @@ npm run seed:business
 
 ### Backend Scripts (`Backend/package.json`)
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| **start** | `npm start` | Start API server (production mode) |
-| **dev** | `npm run dev` | Start API server (development mode) |
-| **seed:medicines** | `npm run seed:medicines` | Seed medicine records into database |
-| **seed:business** | `npm run seed:business` | Seed suppliers, customers, and purchases |
-| **test** | `npm test` | Run test suite (if available) |
+| Script             | Command                  | Description                              |
+| ------------------ | ------------------------ | ---------------------------------------- |
+| **start**          | `npm start`              | Start API server (production mode)       |
+| **dev**            | `npm run dev`            | Start API server (development mode)      |
+| **seed:medicines** | `npm run seed:medicines` | Seed medicine records into database      |
+| **seed:business**  | `npm run seed:business`  | Seed suppliers, customers, and purchases |
+| **test**           | `npm test`               | Run test suite (if available)            |
 
 ### Frontend Scripts (`Frontend/package.json`)
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| **dev** | `npm run dev` | Start Vite development server on port 5173 |
-| **build** | `npm run build` | Build optimized production bundle |
-| **build:prod** | `npm run build:prod` | Build with production optimizations |
-| **preview** | `npm run preview` | Preview production build locally |
-| **start** | `npm start` | Alias for `npm run dev` |
-| **test** | `npm test` | Run test suite (if available) |
+| Script         | Command              | Description                                |
+| -------------- | -------------------- | ------------------------------------------ |
+| **dev**        | `npm run dev`        | Start Vite development server on port 5173 |
+| **build**      | `npm run build`      | Build optimized production bundle          |
+| **build:prod** | `npm run build:prod` | Build with production optimizations        |
+| **preview**    | `npm run preview`    | Preview production build locally           |
+| **start**      | `npm start`          | Alias for `npm run dev`                    |
+| **test**       | `npm test`           | Run test suite (if available)              |
 
 ## 📦 Core Modules
 
-| Module | Description | Features |
-|--------|-------------|----------|
-| **Dashboard** | System overview and KPIs | Key metrics, quick stats, navigation |
-| **Medicines** | Medicine inventory management | Add/edit/delete, stock tracking, alerts |
-| **POS** | Point of Sale system | Cart management, invoice generation, print |
-| **Bills** | Invoice and bill management | View, edit, delete, stock reconciliation |
-| **Purchases** | Supplier order tracking | Create, track, receive purchase orders |
-| **Suppliers** | Supplier information management | Contact details, purchase history |
-| **Customers** | Customer information management | Contact details, purchase history |
-| **Reports** | Analytics and reporting | Filtered reports, export data |
-| **Admin Users** | User access management | Create/edit/delete users, role assignment |
-| **Logs** | Immutable audit trail | Activity log, login history, data changes |
+| Module          | Description                     | Features                                   |
+| --------------- | ------------------------------- | ------------------------------------------ |
+| **Dashboard**   | System overview and KPIs        | Key metrics, quick stats, navigation       |
+| **Medicines**   | Medicine inventory management   | Add/edit/delete, stock tracking, alerts    |
+| **POS**         | Point of Sale system            | Cart management, invoice generation, print |
+| **Bills**       | Invoice and bill management     | View, edit, delete, stock reconciliation   |
+| **Purchases**   | Supplier order tracking         | Create, track, receive purchase orders     |
+| **Suppliers**   | Supplier information management | Contact details, purchase history          |
+| **Customers**   | Customer information management | Contact details, purchase history          |
+| **Reports**     | Analytics and reporting         | Filtered reports, export data              |
+| **Admin Users** | User access management          | Create/edit/delete users, role assignment  |
+| **Logs**        | Immutable audit trail           | Activity log, login history, data changes  |
 
 ## 🔒 Security & Audit
 
 ### Authentication & Authorization
+
 - Passwords hashed using **bcrypt** (industry-standard)
 - API routes protected with **JWT middleware**
 - Role-based access control (Admin/Staff)
@@ -319,6 +331,7 @@ npm run seed:business
 - Session management and token validation
 
 ### Audit & Compliance
+
 - **Immutable activity logs** - no delete operations allowed
 - Comprehensive audit trail of all data changes
 - Authentication event tracking (login/logout)
@@ -327,6 +340,7 @@ npm run seed:business
 - Data change audits with before/after values
 
 ### Best Practices Implemented
+
 - Environment variables for sensitive configuration
 - CORS protection with configurable origins
 - Input validation using Joi schema validation
@@ -435,6 +449,7 @@ Contributions are welcome! Please follow these steps:
 ## 📝 API Documentation
 
 ### Base URL
+
 ```
 http://localhost:5000/api          (Development)
 https://your-backend.vercel.app/api (Production)
@@ -443,11 +458,13 @@ https://your-backend.vercel.app/api (Production)
 ### Key Endpoints
 
 #### Authentication
+
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
 
 #### Medicines
+
 - `GET /api/medicines` - List all medicines
 - `POST /api/medicines` - Create new medicine
 - `GET /api/medicines/:id` - Get medicine details
@@ -455,6 +472,7 @@ https://your-backend.vercel.app/api (Production)
 - `DELETE /api/medicines/:id` - Delete medicine
 
 #### Sales
+
 - `GET /api/sales` - List all sales
 - `POST /api/sales` - Create new sale
 - `GET /api/sales/:id` - Get sale details
@@ -462,6 +480,7 @@ https://your-backend.vercel.app/api (Production)
 - `DELETE /api/sales/:id` - Delete sale
 
 #### Purchases
+
 - `GET /api/purchases` - List all purchases
 - `POST /api/purchases` - Create new purchase
 - `GET /api/purchases/:id` - Get purchase details
@@ -469,12 +488,14 @@ https://your-backend.vercel.app/api (Production)
 - `DELETE /api/purchases/:id` - Delete purchase
 
 #### Reports
+
 - `GET /api/reports/dashboard` - Dashboard metrics
 - `GET /api/reports/medicines` - Medicine reports
 - `GET /api/reports/sales` - Sales reports
 - `GET /api/reports/purchases` - Purchase reports
 
 #### Logs
+
 - `GET /api/logs` - Get activity logs
 - `GET /api/logs/user/:userId` - Get user activity
 
@@ -491,6 +512,7 @@ For complete API documentation, refer to the route files in `Backend/routes/`.
 ## 🐛 Known Issues
 
 Currently, there are no known issues. If you encounter any problems, please open an issue on GitHub with:
+
 - Clear description of the problem
 - Steps to reproduce
 - Expected vs actual behavior
@@ -512,12 +534,14 @@ This project is licensed under the **ISC License** - see the [LICENSE](./LICENSE
 ## 🎉 Acknowledgments
 
 ### Technologies Used
+
 - The MERN community for excellent tools and frameworks
 - MongoDB for reliable database solutions
 - Vercel for seamless deployment platform
 - All open-source contributors
 
 ### Testing & Quality
+
 - Peer reviewed for security best practices
 - Production-grade error handling
 - Industry-standard authentication and authorization
